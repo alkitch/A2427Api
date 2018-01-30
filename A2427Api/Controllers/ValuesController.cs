@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using A2427Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace A2427Api.Controllers
@@ -25,8 +26,10 @@ namespace A2427Api.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Create([FromBody]Value value)
         {
+            
+            return new CreatedResult("100",value);
         }
 
         // PUT api/values/5
