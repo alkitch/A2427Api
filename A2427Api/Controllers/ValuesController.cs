@@ -10,11 +10,27 @@ namespace A2427Api.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+
+        private readonly RFIDContext _context;
+
+        public ValuesController(RFIDContext context)
+        {
+            _context = context;
+        }
+
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<RFID> Get()
         {
-            return new string[] { "value1", "value2" };
+
+            //_context.Valuex.Add(new Value { value = "hello" });
+            //_context.Valuex.Add(new Value { value = "alan" });
+            //_context.SaveChanges();
+
+            //return new string[] { "value1", "value2" };
+
+            return _context.Rfids.ToList();
+            
         }
 
         // GET api/values/5
@@ -26,10 +42,12 @@ namespace A2427Api.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult Create([FromBody]Value value)
+        public IActionResult Create([FromBody]RFID value)
         {
-            
-            return new CreatedResult("100",value);
+
+            _context.Rfids.Add(value);
+            _context.SaveChanges();
+            return new CreatedResult("100","{\"result\":\"" + value.RFDidTag + "\"}" );
         }
 
         // PUT api/values/5
